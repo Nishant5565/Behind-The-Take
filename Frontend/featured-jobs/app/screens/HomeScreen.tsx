@@ -5,7 +5,7 @@ import FeaturedJobCard from "../Components/FeaturedJobCard";
 import { fetchCategories, fetchJobs } from "../services/api";
 
 const HomeScreen: React.FC = () => {
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,8 @@ const HomeScreen: React.FC = () => {
   useEffect(() => {
     const loadCategories = async () => {
       const data = await fetchCategories();
-      setCategories(["All", ...data]);
+      setCategories([{ id: "all", name: "All" }, ...data]);
+      console.log(data);
     };
 
     const loadJobs = async () => {
@@ -21,6 +22,7 @@ const HomeScreen: React.FC = () => {
       const data = await fetchJobs(selectedCategory);
       setJobs(data);
       setLoading(false);
+      console.log(data);
     };
 
     loadCategories();
