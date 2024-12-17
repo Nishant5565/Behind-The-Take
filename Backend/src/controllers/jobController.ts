@@ -7,7 +7,10 @@ export const getFeaturedJobs = async (req: Request, res: Response) => {
     console.log(category);
 
     const jobs = await prisma.job.findMany({ 
-      where: { category: { id: category } },
+      where: { 
+        category: { id: category },
+        featured: true
+      },
       include: { category: true },
     });
 

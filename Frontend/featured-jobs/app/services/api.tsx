@@ -5,7 +5,7 @@ export const fetchCategories = async () => {
      return response.json();
    };
    
-export const fetchJobs = async (category: string) => {
+export const fetchJobs = async (category: number) => {
      const response = await fetch( API_URL+"/api/jobs/featured", 
         {
           method: "POST",
