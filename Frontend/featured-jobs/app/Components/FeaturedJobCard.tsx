@@ -17,7 +17,22 @@ const FeaturedJobCard = ({
   location,
   salary,
   featured,
-}: Job) => {
+  loading,
+}: Job & { loading: boolean }) => {
+
+  const laodingArray = Array.from({ length: 4 }, (_, i) => i);
+
+  if (loading) {
+    return (
+      <View className="px-10 py-5 rounded-[16px] bg-gray-700 mt-6 p-6 mb-4 shadow-lg">
+        {laodingArray.map((_, index) => (
+          <View key={index} className="px-10 py-5 rounded-full bg-gray-700">
+          </View>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <View className="p-6 mt-6 rounded-[16px] bg-[#6b18e8] mb-4 shadow-lg ">
       <View className="flex flex-row items-center rounded-ful px-2 py-1 justify-between w-full">
