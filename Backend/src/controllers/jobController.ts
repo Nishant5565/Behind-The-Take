@@ -1,18 +1,27 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/client";
-
 export const getFeaturedJobs = async (req: Request, res: Response) => {
   try {
     const { category } = req.body;
     console.log(category);
 
-    const jobs = await prisma.job.findMany({ 
-      where: { 
-        category: { id: category },
-        featured: true
-      },
-      include: { category: true },
-    });
+    let jobs;
+    if (category === 1) {
+      jobs = await prisma.job.findMany({
+        where: {
+          featured: true,
+        },
+        include: { category: true },
+      });
+    } else {
+      jobs = await prisma.job.findMany({
+        where: {
+          category: { id: category },
+          featured: true,
+        },
+        include: { category: true },
+      });
+    }
 
     res.status(200).json(jobs);
   } catch (error) {

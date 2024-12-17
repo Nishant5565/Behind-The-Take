@@ -8,6 +8,8 @@ import {
   Image,
   FlatList,
   StatusBar,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Ionicons, MaterialIcons, Feather } from "@expo/vector-icons";
 import "../global.css";
@@ -17,6 +19,7 @@ import {
   Poppins_400Regular,
   Poppins_300Light,
   Poppins_700Bold,
+  Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 import * as SplashScreen from "expo-splash-screen";
 import Entypo from '@expo/vector-icons/Entypo';
@@ -28,7 +31,14 @@ export default function Index() {
     Poppins_400Regular,
     Poppins_300Light,
     Poppins_700Bold,
+    Poppins_600SemiBold
   });
+
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+  };
 
   useEffect(() => {
     if (loaded || error) {
@@ -81,7 +91,10 @@ export default function Index() {
                 </TouchableOpacity>
               </View >
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  className="w-16 h-16 border-2 border-[#1e1e1e] rounded-full flex items-center justify-center p-3"
+                  onPress={toggleNotifications}
+                >
                   <Ionicons
                     name="notifications-outline"
                     size={24}
@@ -127,6 +140,23 @@ export default function Index() {
           </>
         }
       />
+      {showNotifications && (
+        <Modal
+          transparent={true}
+          animationType="fade"
+          visible={showNotifications}
+          onRequestClose={toggleNotifications}
+        >
+          <TouchableWithoutFeedback onPress={toggleNotifications}>
+            <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+              <View style={{ margin: 20, padding: 20, backgroundColor: 'white', borderRadius: 10 }}>
+                <Text style={{ fontFamily: "Poppins_700Bold", marginBottom: 10 }}>Notifications</Text>
+                <Text style={{ fontFamily: "Poppins_400Regular" }}>All your notifications are here</Text>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      )}
     </SafeAreaView>
   );
 }
